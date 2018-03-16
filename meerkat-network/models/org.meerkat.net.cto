@@ -1,19 +1,24 @@
-/**
- * Write your model definitions here
- */
-
 namespace org.meerkat.net
 
-participant User identified by email {
-  o String email
+asset Invoice identified by invoiceId {
+  o String invoiceId
+  o Double amount
+  o InvoiceStatus status
+  --> BizEntity sender
+  --> BizEntity receiver
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  o String value
+participant BizEntity identified by bizEntityId {
+  o String bizEntityId
+  o String name
+  o Double debt
+  o Double claim
 }
 
-transaction ChangeAssetValue {
-  o String newValue
-  --> Asset relatedAsset
+enum InvoiceStatus {
+  o NEW
+  o ACCEPTED
+  o REJECTED
+  o PAID
+  o COMPLETED
 }
