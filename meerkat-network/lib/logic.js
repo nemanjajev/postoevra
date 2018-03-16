@@ -9,8 +9,8 @@
  * @transaction
  */
 function onAcceptInvoice(acceptInvoiceTransaction) {
-    let assetRegistry;
-    let id = acceptInvoiceTransaction.invoiceId;
+    var assetRegistry;
+    var id = acceptInvoiceTransaction.invoiceId;
 
     if(acceptInvoiceTransaction.sender.bizEntityId !== acceptInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can accept transaction");
@@ -34,11 +34,12 @@ function onAcceptInvoice(acceptInvoiceTransaction) {
 function onCreateInvoice(createInvoiceTransaction) {
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function(ar) {
-            let factory = getFactory();
-            let newInvoice = factory.newResource("org.meerkat.net", "Invoice", `${createInvoiceTransaction.sender.bizEntityId}_${createInvoiceTransaction.invoiceId}`);
+            var factory = getFactory();
+            var newInvoice = factory.newResource("org.meerkat.net", "Invoice", createInvoiceTransaction.sender.bizEntityId + "_" + createInvoiceTransaction.invoiceId);
             newInvoice.amount = createInvoiceTransaction.amount;
             newInvoice.receiver = createInvoiceTransaction.receiver;
             newInvoice.sender = createInvoiceTransaction.sender;
+            newInvoice.status = "NEW";
 
             return ar.add(newInvoice);
         })
