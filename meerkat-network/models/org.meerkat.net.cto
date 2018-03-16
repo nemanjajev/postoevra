@@ -15,6 +15,20 @@ participant BizEntity identified by bizEntityId {
   o Double claim
 }
 
+transaction CreateInvoice {
+  o String invoiceId
+  o Double amount
+  --> BizEntity sender
+  --> BizEntity receiver
+}
+
+transaction AcceptInvoice {
+  o InvoiceStatus newStatus
+  --> BizEntity sender
+  --> BizEntity invoice
+}
+
+
 enum InvoiceStatus {
   o NEW
   o ACCEPTED
