@@ -12,6 +12,7 @@ import { UserComponent } from './home/user/user.component';
 import { TabsComponent } from './home/tabs/tabs.component';
 import { EventsComponent } from './home/events/events.component';
 import { OverviewComponent } from './home/tabs/overview/overview.component';
+import { InvoiceComponent } from './home/tabs/invoice/invoice.component';
 import { InvoiceService } from './services/invoice.service';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { InvoiceService } from './services/invoice.service';
     TabsComponent,
     EventsComponent,
     UserComponent,
-    OverviewComponent
+    OverviewComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

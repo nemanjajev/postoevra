@@ -8,7 +8,7 @@
         <app-overview [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-overview>
     </div>
     <div class="invoice-tab" *ngIf="isInvoicesActive()">
-        INVOICE TAB WORKS
+        <app-invoice></app-invoice>
     </div>
     <div class="reports-tab" *ngIf="isReportsActive()">
         REPORTS TAB WORKS

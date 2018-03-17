@@ -1,0 +1,15 @@
+<form [formGroup]="myForm">           
+    <div class="form-group text-left">
+        <label for="invoiceId">invoiceId</label>
+        <input formControlName="invoiceId" type="text" class="form-control">
+    </div>
+    <div class="form-group text-left">
+        <label for="amount">amount</label>
+        <input formControlName="amount" type="number" step='any' class="form-control">
+    </div>
+    <div class="form-group text-left">
+        <label for="receiver">receiver</label>
+        <input formControlName="receiver" type="number" step='any' class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Create Invoice</button>
+</form>
