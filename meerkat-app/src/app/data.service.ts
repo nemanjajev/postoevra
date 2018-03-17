@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Configuration } from './configuration';
-import { BizEntity } from './org.meerkat.net';
+import { BizEntity, Invoice } from './org.meerkat.net';
 
 @Injectable()
 export class DataService<Type> {
@@ -35,6 +35,18 @@ export class DataService<Type> {
 			debt: 0,
 			claim: 0
 		}
+    }
+
+    public getInvoicesSentByUser(bizEntityId: string): Observable<Invoice[]> {
+        return this.http.get(`${this.actionUrl}/queries/selectInvoicesForUserSender/?entityId=resource%3Aorg.meerkat.net.BizEntity%23${bizEntityId}`)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
+    public getInvoicesReceivingByUser(bizEntityId: string): Observable<Invoice[]> {
+        return this.http.get(`${this.actionUrl}/queries/selectInvoicesForUserReceiver/?entityId=resource%3Aorg.meerkat.net.BizEntity%23${bizEntityId}`)
+          .map(this.extractData)
+          .catch(this.handleError);
     }
 
     public getAll(ns: string): Observable<Type[]> {

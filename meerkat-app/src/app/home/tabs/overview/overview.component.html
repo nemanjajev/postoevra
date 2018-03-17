@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let invoice of invoices">
+            <tr *ngFor="let invoice of sentInvoices">
                 <td>{{invoice.invoiceId}}</td>
                 <td>{{invoice.amount}}</td>
                 <td>{{invoice.status}}</td>
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let invoice of invoices">
+            <tr *ngFor="let invoice of receivingInvoices">
                 <td>{{invoice.invoiceId}}</td>
                 <td>{{invoice.amount}}</td>
                 <td>{{invoice.status}}</td>
