@@ -28,6 +28,16 @@ transaction AcceptInvoice {
   --> BizEntity invoice
 }
 
+transaction PayInvoice {
+  --> BizEntity sender
+  --> Invoice invoice
+}
+
+transaction ConfirmPaidInvoice {
+  --> BizEntity sender
+  --> Invoice invoice
+}
+
 
 enum InvoiceStatus {
   o NEW
