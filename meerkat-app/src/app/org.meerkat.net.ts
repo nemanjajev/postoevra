@@ -2,7 +2,7 @@ import {Asset} from './org.hyperledger.composer.system';
 import {Participant} from './org.hyperledger.composer.system';
 import {Transaction} from './org.hyperledger.composer.system';
 import {Event} from './org.hyperledger.composer.system';
-// export namespace org.meerkat.net{
+
    export class Invoice extends Asset {
       invoiceId: string;
       amount: number;
@@ -34,4 +34,3 @@ import {Event} from './org.hyperledger.composer.system';
       PAID,
       COMPLETED,
    }
-// }
