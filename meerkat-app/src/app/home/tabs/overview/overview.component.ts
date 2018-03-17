@@ -53,18 +53,36 @@ export class OverviewComponent implements OnChanges {
 
 	onActionClicked(invoice: Invoice) {
 		switch(invoice.status.toString()){
-			case InvoiceStatus[InvoiceStatus.NEW] :
-				let disposable = this.dialogService.addDialog(AcceptModalComponent, {
-					title:'New invoice action', 
-					message:'Do you want to accept the invoiced from {bizEntity} with ammount' + invoice.amount + "?"})
+			case InvoiceStatus[InvoiceStatus.NEW]:
+				this.dialogService.addDialog(AcceptModalComponent, {
+					title:'Accept new invoice', 
+					message:'Do you want to accept the invoiced from {bizEntity} with amount: ' + invoice.amount + " ?"})
 					.subscribe((isConfirmed)=>{
 						if(isConfirmed) {
 							this.dataService.acceptInvoice(this.currentUserId, invoice.invoiceId)
-								.subscribe(result => alert('accepted'));
+								.subscribe(result => alert('Invoice successfully accepted!'));
 						}
 					});
+			case InvoiceStatus[InvoiceStatus.ACCEPTED]:
+				this.dialogService.addDialog(AcceptModalComponent, {
+					title:'Mark invoice as paid', 
+					message:'Do you want to mark the invoice from {bizEntity} with amount: ' + invoice.amount + " as paid?"})
+					.subscribe((isConfirmed)=>{
+						if(isConfirmed) {
+							this.dataService.payInvoice(this.currentUserId, invoice.invoiceId)
+								.subscribe(result => alert('Invoice successfully marked as paid!'));
+						}
+					});	
 			case InvoiceStatus[InvoiceStatus.PAID] :
-				return "CONFIRM";
+				this.dialogService.addDialog(AcceptModalComponent, {
+					title:'Confirm invoice payment', 
+					message:'Do you want to confirm the payment of the invoice from {bizEntity} with amount: ' + invoice.amount + " ?"})
+					.subscribe((isConfirmed)=>{
+						if(isConfirmed) {
+							this.dataService.confirmPaidInvoice(this.currentUserId, invoice.invoiceId)
+								.subscribe(result => alert('Payment of the invoice successfully confirmed!'));
+						}
+					});
 		}
 	}
 }
