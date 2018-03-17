@@ -1,0 +1,52 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+networks:
+  byfn:
+
+services:
+
+  orderer.meerkat.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.meerkat.com
+    container_name: orderer.meerkat.com
+    networks:
+      - byfn
+
+  peer0.org1.meerkat.com:
+    container_name: peer0.org1.meerkat.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org1.meerkat.com
+    networks:
+      - byfn
+
+  peer1.org1.meerkat.com:
+    container_name: peer1.org1.meerkat.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org1.meerkat.com
+    networks:
+      - byfn
+
+  peer0.org2.meerkat.com:
+    container_name: peer0.org2.meerkat.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.org2.meerkat.com
+    networks:
+      - byfn
+
+  peer1.org2.meerkat.com:
+    container_name: peer1.org2.meerkat.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.org2.meerkat.com
+    networks:
+      - byfn
+

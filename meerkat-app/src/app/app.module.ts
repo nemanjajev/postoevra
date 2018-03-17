@@ -7,16 +7,19 @@ import { Configuration }     from './configuration';
 import { DataService }     from './data.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-// import { TransactionComponent } from './Transaction/Transaction.component'
+import { UserComponent } from './home/user/user.component';
+import { TabsComponent } from './home/tabs/tabs.component';
+import { EventsComponent } from './home/events/events.component';
 
 import { InvoiceComponent } from './Invoice/Invoice.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-		HomeComponent,
-    // TransactionComponent,
-    
+    HomeComponent,
+    TabsComponent,
+    EventsComponent,
+    UserComponent,
     InvoiceComponent
 		
   ],
