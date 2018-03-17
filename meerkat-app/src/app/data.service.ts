@@ -49,6 +49,17 @@ export class DataService<Type> {
           .catch(this.handleError);
     }
 
+    public acceptInvoice(bizEntityId: string, invoiceId: string): Observable<Type> {
+        let transactionBody = {
+            "$class": "org.meerkat.net.AcceptInvoice",
+            "sender": "org.meerkat.net.BizEntity#" + bizEntityId,
+            "invoice": "org.meerkat.net.Invoice#" + invoiceId
+        };
+        return this.http.post(`${this.actionUrl}/AcceptInvoice`, transactionBody)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
     public getAll(ns: string): Observable<Type[]> {
         console.log('GetAll ' + ns + ' to ' + this.actionUrl + ns);
         return this.http.get(`${this.actionUrl}${ns}`)
