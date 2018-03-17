@@ -1,3 +1,4 @@
-.tabs-container {
-    border: 1px solid blue;
+
+:host {
+    flex-basis: 800px;
 }

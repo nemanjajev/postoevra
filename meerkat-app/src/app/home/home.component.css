@@ -1,16 +1,5 @@
 .home-container {
     display: flex;
     flex-direction: column;
-}
-
-.users-container {
-    border: 1px solid red;
-}
-
-.tabs-container {
-    border: 1px solid blue;
-}
-
-.events-container {
-    border: 1px solid green;
+    height: 100%;
 }
