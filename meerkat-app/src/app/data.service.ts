@@ -49,6 +49,13 @@ export class DataService<Type> {
           .catch(this.handleError);
     }
 
+    public createInvoice(invoiceToAdd: any): Observable<Type> {
+
+        return this.http.post(`${this.actionUrl}/CreateInvoice`, invoiceToAdd)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
     public acceptInvoice(bizEntityId: string, invoiceId: string): Observable<Type> {
         let transactionBody = {
             "$class": "org.meerkat.net.AcceptInvoice",

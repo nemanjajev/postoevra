@@ -26,7 +26,7 @@ export class InvoiceService {
     }
 
     public addAsset(itemToAdd: any): Observable<Invoice> {
-      return this.dataService.add(this.NAMESPACE, itemToAdd);
+      return this.dataService.createInvoice(itemToAdd);
     }
 
     public updateAsset(id: any, itemToUpdate: any): Observable<Invoice> {

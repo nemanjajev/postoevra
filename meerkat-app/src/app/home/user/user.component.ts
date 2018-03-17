@@ -26,17 +26,18 @@ export class UserComponent implements OnInit {
 		this.userService.getAll().subscribe(result => {
 			this.biznisEntities = result;
 		})
-			this.messages = <Subject<Message>>this.wsService
+			this.wsService
 				.connect("ws://localhost:3000")
-				.map((response: MessageEvent): Message => {
-					let data = JSON.parse(response.data);
-					console.log(data);
+				.subscribe(result => console.log(result));
+				// .map((response: MessageEvent): Message => {
+				// 	let data = JSON.parse(response.data);
+				// 	console.log(data + "AKO UMREM");
 					
-					return {
-						author: data.author,
-						message: data.message
-					}
-				});
+				// 	return {
+				// 		author: data.author,
+				// 		message: data.message
+				// 	}
+				// });
 	}
 
 	onChange(event: any) {
