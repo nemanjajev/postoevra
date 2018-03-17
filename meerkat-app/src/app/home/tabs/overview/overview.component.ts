@@ -63,6 +63,7 @@ export class OverviewComponent implements OnChanges {
 								.subscribe(result => alert('Invoice successfully accepted!'));
 						}
 					});
+				break;
 			case InvoiceStatus[InvoiceStatus.ACCEPTED]:
 				this.dialogService.addDialog(AcceptModalComponent, {
 					title:'Mark invoice as paid', 
@@ -73,6 +74,7 @@ export class OverviewComponent implements OnChanges {
 								.subscribe(result => alert('Invoice successfully marked as paid!'));
 						}
 					});	
+				break;
 			case InvoiceStatus[InvoiceStatus.PAID] :
 				this.dialogService.addDialog(AcceptModalComponent, {
 					title:'Confirm invoice payment', 
@@ -83,6 +85,7 @@ export class OverviewComponent implements OnChanges {
 								.subscribe(result => alert('Payment of the invoice successfully confirmed!'));
 						}
 					});
+				break;
 		}
 	}
 }
