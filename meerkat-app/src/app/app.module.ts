@@ -16,6 +16,8 @@ import { OverviewComponent } from './home/tabs/overview/overview.component';
 import { InvoiceComponent } from './home/tabs/invoice/invoice.component';
 import { AcceptModalComponent } from "./shared/modal/acceptModal.component";
 import { InvoiceService } from './services/invoice.service';
+import { WebsocketService } from './services/websocket.service';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { InvoiceService } from './services/invoice.service';
     Configuration,
     DataService,
     UserService,
-    InvoiceService
+    InvoiceService,
+    WebsocketService
   ],
   bootstrap: [AppComponent]
 })
