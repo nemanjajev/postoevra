@@ -11,10 +11,19 @@
 function onAcceptInvoice(acceptInvoiceTransaction) {
     var assetRegistry;
     var id = acceptInvoiceTransaction.invoiceId;
-
+    var event;
+    
     if (acceptInvoiceTransaction.sender.bizEntityId !== acceptInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can accept transaction");
     }
+
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "NEW";
+    event.newState = "ACCEPTED";
+    event.receiverId = acceptInvoiceTransaction.invoice.sender.bizEntityId;
+    event.senderId = acceptInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.invoiceId = acceptInvoiceTransaction.invoice.invoiceId;
 
         return Promise.resolve()
         .then(function () {
@@ -52,6 +61,10 @@ function onAcceptInvoice(acceptInvoiceTransaction) {
                     return assetRegistry1.update(asset);
                     return Promise.resolve();
                 });
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         });
 }
 
@@ -61,6 +74,7 @@ function onAcceptInvoice(acceptInvoiceTransaction) {
  * @transaction
  */
 function onCreateInvoice(createInvoiceTransaction) {
+    var event;
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function (ar) {
             var factory = getFactory();
@@ -70,14 +84,19 @@ function onCreateInvoice(createInvoiceTransaction) {
             newInvoice.sender = createInvoiceTransaction.sender;
             newInvoice.status = "NEW";
 
-            var basicEvent = factory.newEvent('org.meerkat.net', 'InvoiceCreatedEvent');
-            basicEvent.state = "NEW";
-            basicEvent.receiverId = "r";
-            basicEvent.senderId = "s";
+            event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+            event.oldState = "NEW";
+            event.newState = "NEW";
+            event.receiverId = createInvoiceTransaction.receiver.bizEntityId;
+            event.senderId = createInvoiceTransaction.sender.bizEntityId;
+            event.invoiceId = createInvoiceTransaction.invoiceId;
 
-            emit(basicEvent);
 
             return ar.add(newInvoice);
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         })
         .catch(function (err) {
             throw new Error(err);
