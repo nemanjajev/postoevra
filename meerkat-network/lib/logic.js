@@ -113,6 +113,16 @@ function onPayInvoice(payInvoiceTransaction) {
     if (payInvoiceTransaction.sender.bizEntityId !== payInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can pay transaction");
     }
+
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "ACCEPTED";
+    event.newState = "PAID";
+    event.receiverId = payInvoiceTransaction.invoice.sender.bizEntityId;
+    event.senderId = payInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.invoiceId = payInvoiceTransaction.invoice.invoiceId;
+
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function (ar) {
             assetRegistry = ar;
@@ -121,6 +131,10 @@ function onPayInvoice(payInvoiceTransaction) {
         .then(function (asset) {
             asset.status = "PAID";
             return assetRegistry.update(asset);
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         })
         .catch(function (err) {
             throw new Error(err);
@@ -178,6 +192,15 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
         throw new Error("Only sender of transaction can confirm transaction paid");
     }
 
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "PAID";
+    event.newState = "COMPLETED";
+    event.receiverId = confirmPaidInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.senderId = confirmPaidInvoiceTransaction.invoice.sender.bizEntityId;
+    event.invoiceId = confirmPaidInvoiceTransaction.invoice.invoiceId;
+
     return Promise.resolve()
         .then(function () {
             getAssetRegistry('org.meerkat.net.Invoice')
@@ -214,6 +237,10 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
                     return assetRegistry1.update(asset);
                     return Promise.resolve();
                 });
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         });
 }
 
