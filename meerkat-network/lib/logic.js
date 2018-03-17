@@ -24,6 +24,7 @@ function onAcceptInvoice(acceptInvoiceTransaction) {
             asset.status = acceptInvoiceTransaction.newStatus;
             return assetRegistry.update(asset);
         });
+        // TODO: update participants papce
 }
 
 /**
@@ -122,6 +123,20 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
                 return Promise.resolve();
             });
         });
+}
 
+/**
+ * Pay invoice transaction
+ * @param {org.meerkat.net.BizEntityInvoices} bizEntityInvoicesTransaction
+ * @transaction
+ */
+function onBizEntityInvoices(bizEntityInvoicesTransaction) {
+    return getAssetRegistry('org.meerkat.net.Invoice')
+    .then(function() {
+        return query('selectInvoicesForUserSender')
+        .then(function(results){
+            return results;
+        });
+    });
 
 }
