@@ -38,6 +38,10 @@ transaction ConfirmPaidInvoice {
   --> Invoice invoice
 }
 
+transaction BizEntityInvoices {
+  --> BizEntity entity
+}
+
 
 enum InvoiceStatus {
   o NEW

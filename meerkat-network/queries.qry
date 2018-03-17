@@ -1,0 +1,6 @@
+query selectInvoicesForUserSender {
+  description: "Select all active invoices where one user is sender"
+  statement:
+      SELECT org.meerkat.net.Invoice
+        WHERE (sender == _$entityId)
+}
