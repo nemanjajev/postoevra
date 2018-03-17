@@ -1,23 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Invoice } from '../../../org.meerkat.net';
-import { InvoiceService } from '../../../services/invoice.service';
+import { DataService } from '../../../data.service';
 
 @Component({
 	selector: 'app-overview',
 	templateUrl: './overview.component.html',
 	styleUrls: ['./overview.component.css']
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnChanges {
 	@Input() currentUserId: string;
 
-	private invoices: Invoice[];
+	private sentInvoices: Invoice[];
+	private receivingInvoices: Invoice[];
 
-	constructor(private invoiceService: InvoiceService){}
+	constructor(private dataService: DataService<Invoice>){}
 
-	ngOnInit(): void {
+	ngOnChanges(): void {
 		console.log(this.currentUserId);
-		this.invoiceService.getAll().subscribe(result => {
-			this.invoices = result;
+		this.dataService.getInvoicesSentByUser(this.currentUserId).subscribe(result => {
+			this.sentInvoices = result;
+		})
+
+		this.dataService.getInvoicesReceivingByUser(this.currentUserId).subscribe(result => {
+			this.receivingInvoices = result;
 		})
 	}
 }
