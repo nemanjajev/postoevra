@@ -15,16 +15,44 @@ function onAcceptInvoice(acceptInvoiceTransaction) {
     if (acceptInvoiceTransaction.sender.bizEntityId !== acceptInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can accept transaction");
     }
-    return getAssetRegistry('org.meerkat.net.Invoice')
-        .then(function (ar) {
-            assetRegistry = ar;
-            return assetRegistry.get(id);
+
+        return Promise.resolve()
+        .then(function () {
+            getAssetRegistry('org.meerkat.net.Invoice')
+                .then(function (ar) {
+                    assetRegistry = ar;
+                    return assetRegistry.get(acceptInvoiceTransaction.invoice.invoiceId);
+                })
+                .then(function (asset) {
+                    asset.status = "ACCEPTED";
+                    assetRegistry.update(asset);
+                    return Promise.resolve();
+                });
         })
-        .then(function (asset) {
-            asset.status = acceptInvoiceTransaction.newStatus;
-            return assetRegistry.update(asset);
+        .then(function () {
+            return getParticipantRegistry('org.meerkat.net.BizEntity')
+                .then(
+                    function (ar) {
+                        assetRegistry1 = ar;
+                        return assetRegistry1.get(acceptInvoiceTransaction.invoice.sender.bizEntityId);
+                    }
+                )
+                .then(function (asset) {
+                    asset.claim = asset.claim + acceptInvoiceTransaction.invoice.amount;
+                    return assetRegistry1.update(asset);
+                    return Promise.resolve();
+                })
+                .then(
+                    function () {
+                        return assetRegistry1.get(acceptInvoiceTransaction.invoice.receiver.bizEntityId);
+                    }
+                )
+                .then(function (asset) {
+                    asset.debt = asset.debt + acceptInvoiceTransaction.invoice.amount;
+                    return assetRegistry1.update(asset);
+                    return Promise.resolve();
+                });
         });
-        // TODO: update participants papce
 }
 
 /**
@@ -75,6 +103,30 @@ function onPayInvoice(payInvoiceTransaction) {
 
 /**
  * Pay invoice transaction
+ * @param {org.meerkat.net.RejecetInvoice} rejectInvoiceTransaction
+ * @transaction
+ */
+function onRejectInvoice(rejectInvoiceTransaction) {
+    var assetRegistry;
+    if (rejectInvoiceTransaction.sender.bizEntityId !== rejectInvoiceTransaction.invoice.receiver.bizEntityId) {
+        throw new Error("Only receiver of transaction can reject transaction");
+    }
+    return getAssetRegistry('org.meerkat.net.Invoice')
+        .then(function (ar) {
+            assetRegistry = ar;
+            return assetRegistry.get(rejectInvoiceTransaction.invoice.invoiceId);
+        })
+        .then(function (asset) {
+            asset.status = "REJECTED";
+            return assetRegistry.update(asset);
+        })
+        .catch(function (err) {
+            throw new Error(err);
+        });
+}
+
+/**
+ * Pay invoice transaction
  * @param {org.meerkat.net.ConfirmPaidInvoice} confirmPaidInvoiceTransaction
  * @transaction
  */
@@ -101,27 +153,27 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
         })
         .then(function () {
             return getParticipantRegistry('org.meerkat.net.BizEntity')
-            .then(
-                function (ar) {
-                    assetRegistry1 = ar;
-                    return assetRegistry1.get(confirmPaidInvoiceTransaction.invoice.sender.bizEntityId);
-                }
-            )
-            .then(function (asset) {
-                asset.claim = asset.claim - confirmPaidInvoiceTransaction.invoice.amount;
-                return assetRegistry1.update(asset);
-                return Promise.resolve();
-            })
-            .then(
-                function () {
-                    return assetRegistry1.get(confirmPaidInvoiceTransaction.invoice.receiver.bizEntityId);
-                }
-            )
-            .then(function (asset) {
-                asset.debt = asset.debt - confirmPaidInvoiceTransaction.invoice.amount;
-                return assetRegistry1.update(asset);
-                return Promise.resolve();
-            });
+                .then(
+                    function (ar) {
+                        assetRegistry1 = ar;
+                        return assetRegistry1.get(confirmPaidInvoiceTransaction.invoice.sender.bizEntityId);
+                    }
+                )
+                .then(function (asset) {
+                    asset.claim = asset.claim - confirmPaidInvoiceTransaction.invoice.amount;
+                    return assetRegistry1.update(asset);
+                    return Promise.resolve();
+                })
+                .then(
+                    function () {
+                        return assetRegistry1.get(confirmPaidInvoiceTransaction.invoice.receiver.bizEntityId);
+                    }
+                )
+                .then(function (asset) {
+                    asset.debt = asset.debt - confirmPaidInvoiceTransaction.invoice.amount;
+                    return assetRegistry1.update(asset);
+                    return Promise.resolve();
+                });
         });
 }
 
