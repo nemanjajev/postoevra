@@ -8,6 +8,20 @@ asset Invoice identified by invoiceId {
   --> BizEntity receiver
 }
 
+event InvoiceUpdatedEvent {
+  o String invoiceId
+  o String bizEntityId
+  o InvoiceStatus oldState
+  o InvoiceStatus newState
+}
+
+event InvoiceCreatedEvent {
+  // o String invoiceId
+  o String senderId
+  o String receiverId
+  o InvoiceStatus state
+}
+
 participant BizEntity identified by bizEntityId {
   o String bizEntityId
   o String name
