@@ -70,6 +70,13 @@ function onCreateInvoice(createInvoiceTransaction) {
             newInvoice.sender = createInvoiceTransaction.sender;
             newInvoice.status = "NEW";
 
+            var basicEvent = factory.newEvent('org.meerkat.net', 'InvoiceCreatedEvent');
+            basicEvent.state = "NEW";
+            basicEvent.receiverId = "r";
+            basicEvent.senderId = "s";
+
+            emit(basicEvent);
+
             return ar.add(newInvoice);
         })
         .catch(function (err) {
