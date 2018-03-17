@@ -113,6 +113,16 @@ function onPayInvoice(payInvoiceTransaction) {
     if (payInvoiceTransaction.sender.bizEntityId !== payInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can pay transaction");
     }
+
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "ACCEPTED";
+    event.newState = "PAID";
+    event.receiverId = payInvoiceTransaction.invoice.sender.bizEntityId;
+    event.senderId = payInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.invoiceId = payInvoiceTransaction.invoice.invoiceId;
+
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function (ar) {
             assetRegistry = ar;
@@ -122,6 +132,10 @@ function onPayInvoice(payInvoiceTransaction) {
             asset.status = "PAID";
             return assetRegistry.update(asset);
         })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
+        })
         .catch(function (err) {
             throw new Error(err);
         });
@@ -129,7 +143,7 @@ function onPayInvoice(payInvoiceTransaction) {
 
 /**
  * Pay invoice transaction
- * @param {org.meerkat.net.RejecetInvoice} rejectInvoiceTransaction
+ * @param {org.meerkat.net.RejectInvoice} rejectInvoiceTransaction
  * @transaction
  */
 function onRejectInvoice(rejectInvoiceTransaction) {
@@ -137,6 +151,16 @@ function onRejectInvoice(rejectInvoiceTransaction) {
     if (rejectInvoiceTransaction.sender.bizEntityId !== rejectInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can reject transaction");
     }
+
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "NEW";
+    event.newState = "REJECTED";
+    event.receiverId = rejectInvoiceTransaction.invoice.sender.bizEntityId;
+    event.senderId = rejectInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.invoiceId = rejectInvoiceTransaction.invoice.invoiceId;
+
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function (ar) {
             assetRegistry = ar;
@@ -145,6 +169,10 @@ function onRejectInvoice(rejectInvoiceTransaction) {
         .then(function (asset) {
             asset.status = "REJECTED";
             return assetRegistry.update(asset);
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         })
         .catch(function (err) {
             throw new Error(err);
@@ -163,6 +191,15 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
     if (confirmPaidInvoiceTransaction.sender.bizEntityId !== confirmPaidInvoiceTransaction.invoice.sender.bizEntityId) {
         throw new Error("Only sender of transaction can confirm transaction paid");
     }
+
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "PAID";
+    event.newState = "COMPLETED";
+    event.receiverId = confirmPaidInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.senderId = confirmPaidInvoiceTransaction.invoice.sender.bizEntityId;
+    event.invoiceId = confirmPaidInvoiceTransaction.invoice.invoiceId;
 
     return Promise.resolve()
         .then(function () {
@@ -200,6 +237,10 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
                     return assetRegistry1.update(asset);
                     return Promise.resolve();
                 });
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         });
 }
 
