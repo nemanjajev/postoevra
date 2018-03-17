@@ -5,13 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { Configuration }     from './configuration';
 import { DataService }     from './data.service';
+import { UserService }     from './services/user.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './home/user/user.component';
 import { TabsComponent } from './home/tabs/tabs.component';
 import { EventsComponent } from './home/events/events.component';
-
-import { InvoiceComponent } from './Invoice/Invoice.component';
+import { OverviewComponent } from './home/tabs/overview/overview.component';
+import { InvoiceService } from './services/invoice.service';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,7 @@ import { InvoiceComponent } from './Invoice/Invoice.component';
     TabsComponent,
     EventsComponent,
     UserComponent,
-    InvoiceComponent
-		
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +32,9 @@ import { InvoiceComponent } from './Invoice/Invoice.component';
   ],
   providers: [
     Configuration,
-    DataService
+    DataService,
+    UserService,
+    InvoiceService
   ],
   bootstrap: [AppComponent]
 })
