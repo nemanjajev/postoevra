@@ -24,4 +24,8 @@ export class UserComponent implements OnInit {
 		let selectedUser = this.biznisEntities.find(x=> x.bizEntityId === event.target.value);
 		this.dataService.setCurrentUser(selectedUser);
 	}
+
+	get currentUser() {
+		return this.dataService.getCurrentUser();
+	}
 }

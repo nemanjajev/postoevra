@@ -25,7 +25,16 @@ export class DataService<Type> {
     }
 
     public getCurrentUser(): BizEntity {
-        return this.currentUser;
+        if(this.currentUser) {
+			return this.currentUser;
+		}
+
+		return <BizEntity>{
+			bizEntityId: "init",
+			name: "init",
+			debt: 0,
+			claim: 0
+		}
     }
 
     public getAll(ns: string): Observable<Type[]> {
