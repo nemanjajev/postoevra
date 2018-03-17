@@ -7,6 +7,7 @@ import { Configuration }     from './configuration';
 import { DataService }     from './data.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { UserComponent } from './home/user/user.component';
 // import { TransactionComponent } from './Transaction/Transaction.component'
 
 import { InvoiceComponent } from './Invoice/Invoice.component';
@@ -16,7 +17,7 @@ import { InvoiceComponent } from './Invoice/Invoice.component';
     AppComponent,
 		HomeComponent,
     // TransactionComponent,
-    
+    UserComponent,
     InvoiceComponent
 		
   ],
