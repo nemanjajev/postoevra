@@ -1,19 +1,21 @@
 <div class="overview-invoices">
     <div class="pending-invoices">
-        Sent
+        These invoices require your attention
         <table class="table">
         <thead>
             <tr>
                 <th>Invoice id</th>
                 <th>Amount</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let invoice of sentInvoices">
+            <tr *ngFor="let invoice of pendingActionsInvoices">
                 <td>{{invoice.invoiceId}}</td>
                 <td>{{invoice.amount}}</td>
                 <td>{{invoice.status}}</td>
+                <td><button (click)="onActionClicked(invoice)" class="primary">PENDING ACTION</button></td>
             </tr>
         </tbody>
         </table>
