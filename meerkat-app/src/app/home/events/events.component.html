@@ -1,4 +1,4 @@
-<div class="events-container">
+<div class="events-container" [class.highlight]="shouldHighlight">
     <p>Events in current session:</p>
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let event of events">{{event}}</li>
