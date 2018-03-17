@@ -46,7 +46,7 @@ export class InvoiceComponent {
 	createInvoiceClicked() {
 		this.asset = {
 			"$class": "org.meerkat.net.CreateInvoice",
-			"invoiceId": this.currentUserId + "_" + this.invoiceId.value,
+			"invoiceId": this.invoiceId.value,
 			"amount": this.amount.value,
 			"sender": "resource:org.meerkat.net.BizEntity#" + this.currentUserId,
 			"receiver": "resource:org.meerkat.net.BizEntity#" + this.receiver.value
