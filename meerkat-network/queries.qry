@@ -11,4 +11,3 @@ query selectInvoicesForUserReceiver {
       SELECT org.meerkat.net.Invoice
         WHERE (receiver == _$entityId)
 }
-

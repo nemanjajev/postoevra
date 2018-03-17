@@ -23,9 +23,13 @@ transaction CreateInvoice {
 }
 
 transaction AcceptInvoice {
-  o InvoiceStatus newStatus
   --> BizEntity sender
-  --> BizEntity invoice
+  --> Invoice invoice
+}
+
+transaction RejecetInvoice {
+  --> BizEntity sender
+  --> Invoice invoice
 }
 
 transaction PayInvoice {
