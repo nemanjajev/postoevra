@@ -5,4 +5,10 @@
 
 .overview-invoices {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pending-invoices {
+    width: 50%;
 }

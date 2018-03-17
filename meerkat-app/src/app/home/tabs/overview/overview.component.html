@@ -15,7 +15,7 @@
                 <td>{{invoice.invoiceId}}</td>
                 <td>{{invoice.amount}}</td>
                 <td>{{invoice.status}}</td>
-                <td><button (click)="onActionClicked(invoice)" class="primary">PENDING ACTION</button></td>
+                <td><button (click)="onActionClicked(invoice)" class="btn btn-primary">{{getInvoiceAction(invoice)}}</button></td>
             </tr>
         </tbody>
         </table>

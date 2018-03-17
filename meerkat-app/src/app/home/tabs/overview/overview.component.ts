@@ -46,6 +46,8 @@ export class OverviewComponent implements OnChanges {
 		switch(invoice.status.toString()){
 			case InvoiceStatus[InvoiceStatus.NEW] :
 				return "ACCEPT";
+			case InvoiceStatus[InvoiceStatus.ACCEPTED] :
+				return "MARK AS PAID";
 			case InvoiceStatus[InvoiceStatus.PAID] :
 				return "CONFIRM";
 		}
