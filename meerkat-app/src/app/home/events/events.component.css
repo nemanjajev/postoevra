@@ -5,4 +5,10 @@
 .events-container {
     border-top: 3px solid green;
     height:100%;
+    background: white;
+    transition: .5s ease-in-out all;
+}
+
+.highlight {
+    background: green;
 }

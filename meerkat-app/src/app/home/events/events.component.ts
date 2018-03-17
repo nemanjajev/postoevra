@@ -9,6 +9,7 @@ import { WebsocketService } from 'app/services/websocket.service';
 export class EventsComponent implements OnInit {
 
 	private events: any[] = [];
+	private shouldHighlight: boolean = false;
 
 	constructor(private wsService: WebsocketService){}
 
@@ -17,6 +18,8 @@ export class EventsComponent implements OnInit {
 			.connect("ws://localhost:3000")
 			.subscribe(result => {
 				this.events.push(result.data.toString());
+				this.shouldHighlight = true;
+				setTimeout(() => this.shouldHighlight = false, 1000);
 			} );
 	}
 }
