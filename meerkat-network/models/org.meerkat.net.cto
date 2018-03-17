@@ -10,16 +10,10 @@ asset Invoice identified by invoiceId {
 
 event InvoiceUpdatedEvent {
   o String invoiceId
-  o String bizEntityId
-  o InvoiceStatus oldState
-  o InvoiceStatus newState
-}
-
-event InvoiceCreatedEvent {
-  // o String invoiceId
   o String senderId
   o String receiverId
-  o InvoiceStatus state
+  o InvoiceStatus oldState
+  o InvoiceStatus newState
 }
 
 participant BizEntity identified by bizEntityId {
