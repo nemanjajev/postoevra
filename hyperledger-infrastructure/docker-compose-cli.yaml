@@ -10,43 +10,43 @@ networks:
 
 services:
 
-  orderer.example.com:
+  orderer.meerkat.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.example.com
-    container_name: orderer.example.com
+      service: orderer.meerkat.com
+    container_name: orderer.meerkat.com
     networks:
       - byfn
 
-  peer0.org1.example.com:
-    container_name: peer0.org1.example.com
+  peer0.org1.meerkat.com:
+    container_name: peer0.org1.meerkat.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.org1.example.com
+      service: peer0.org1.meerkat.com
     networks:
       - byfn
 
-  peer1.org1.example.com:
-    container_name: peer1.org1.example.com
+  peer1.org1.meerkat.com:
+    container_name: peer1.org1.meerkat.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.org1.example.com
+      service: peer1.org1.meerkat.com
     networks:
       - byfn
 
-  peer0.org2.example.com:
-    container_name: peer0.org2.example.com
+  peer0.org2.meerkat.com:
+    container_name: peer0.org2.meerkat.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.org2.example.com
+      service: peer0.org2.meerkat.com
     networks:
       - byfn
 
-  peer1.org2.example.com:
-    container_name: peer1.org2.example.com
+  peer1.org2.meerkat.com:
+    container_name: peer1.org2.meerkat.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer1.org2.example.com
+      service: peer1.org2.meerkat.com
     networks:
       - byfn
 
@@ -59,13 +59,13 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer0.org1.meerkat.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.meerkat.com/peers/peer0.org1.meerkat.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.meerkat.com/peers/peer0.org1.meerkat.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.meerkat.com/peers/peer0.org1.meerkat.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.meerkat.com/users/Admin@org1.meerkat.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash -c './scripts/script.sh ${CHANNEL_NAME} ${DELAY} ${LANG}; sleep $TIMEOUT'
     volumes:
@@ -75,10 +75,10 @@ services:
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
-      - orderer.example.com
-      - peer0.org1.example.com
-      - peer1.org1.example.com
-      - peer0.org2.example.com
-      - peer1.org2.example.com
+      - orderer.meerkat.com
+      - peer0.org1.meerkat.com
+      - peer1.org1.meerkat.com
+      - peer0.org2.meerkat.com
+      - peer1.org2.meerkat.com
     networks:
       - byfn
