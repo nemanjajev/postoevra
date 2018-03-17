@@ -20,24 +20,12 @@ export class UserComponent implements OnInit {
 	private biznisEntities: BizEntity[];
 	private messages;
 
-	constructor(private userService: UserService, private dataService: DataService<BizEntity>, private wsService: WebsocketService){}
+	constructor(private userService: UserService, private dataService: DataService<BizEntity>){}
 	
 	ngOnInit(): void {
 		this.userService.getAll().subscribe(result => {
 			this.biznisEntities = result;
 		})
-			this.wsService
-				.connect("ws://localhost:3000")
-				.subscribe(result => console.log(result));
-				// .map((response: MessageEvent): Message => {
-				// 	let data = JSON.parse(response.data);
-				// 	console.log(data + "AKO UMREM");
-					
-				// 	return {
-				// 		author: data.author,
-				// 		message: data.message
-				// 	}
-				// });
 	}
 
 	onChange(event: any) {

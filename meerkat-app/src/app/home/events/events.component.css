@@ -1,3 +1,8 @@
+:host {
+    flex-grow: 1;
+}
+
 .events-container {
-    border: 1px solid green;
+    border-top: 3px solid green;
+    height:100%;
 }

@@ -1,1 +1,6 @@
-<div class="events-container">EVENT COMPONENT WORKS</div>
+<div class="events-container">
+    <p>Events in current session:</p>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let event of events">{{event}}</li>
+    </ul>
+</div>
