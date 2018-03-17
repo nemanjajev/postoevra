@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { Configuration }     from './configuration';
 import { DataService }     from './data.service';
+import { UserService }     from './services/user.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './home/user/user.component';
@@ -32,7 +33,8 @@ import { InvoiceComponent } from './Invoice/Invoice.component';
   ],
   providers: [
     Configuration,
-    DataService
+    DataService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,9 +2,7 @@
 	<div>
 		<label for="biz-entity-id">User:</label>
 		<select id="biz-entity-id">
-			<option value="1">Biznis user 1</option> 
-			<option value="2">Biznis user 2</option>
-			<option value="3">Biznis user 3</option>
+			<option *ngFor="let bizEntity of biznisEntities" value="{{bizEntity.bizEntityId}}">{{bizEntity.name}}</option> 
 		</select>
 	</div>
 	<div>
