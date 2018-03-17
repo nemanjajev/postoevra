@@ -31,13 +31,14 @@ export class OverviewComponent implements OnChanges {
 				}
 			})
 
-			let receivingInovicesWithPendingActions = receiving.filter(s => {
-				if (s.status.toString() === InvoiceStatus[InvoiceStatus.NEW]) {
+			let receivingInvoicesWithPendingActions = receiving.filter(s => {
+				if (s.status.toString() === InvoiceStatus[InvoiceStatus.NEW] ||
+					s.status.toString() === InvoiceStatus[InvoiceStatus.ACCEPTED]) {
 					return s;
 				}
 			})
 
-			this.pendingActionsInvoices = sentInvoicesWithPendingActions.concat(receivingInovicesWithPendingActions);
+			this.pendingActionsInvoices = sentInvoicesWithPendingActions.concat(receivingInvoicesWithPendingActions);
 		})
 	}
 
