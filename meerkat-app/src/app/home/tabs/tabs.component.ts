@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DataService } from '../../data.service';
+import { BizEntity } from '../../org.meerkat.net';
 
 @Component({
 	selector: 'app-tabs',
@@ -12,7 +14,7 @@ export class TabsComponent {
 
 	private activeTab: string = this.HOME;
 	
-	constructor(){}
+	constructor(private dataService: DataService<BizEntity>){}
 
 	clickedTabItem(tabItem) {
 		this.activeTab = tabItem;

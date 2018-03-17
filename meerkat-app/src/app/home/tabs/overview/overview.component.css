@@ -1,0 +1,9 @@
+
+:host {
+    flex-basis: 800px;
+}
+
+.overview-invoices {
+    display: flex;
+    justify-content: space-between;
+}
