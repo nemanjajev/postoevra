@@ -12,6 +12,9 @@ import { InvoiceService } from 'app/services/invoice.service';
 export class InvoiceComponent {
 	@Input() currentUserId: string;
 
+	private sentInvoices: Invoice[];
+	private receivingInvoices: Invoice[];
+
 	myForm: FormGroup;
   	private allAssets;
   	private asset;
@@ -22,12 +25,22 @@ export class InvoiceComponent {
 	amount = new FormControl("", Validators.required);  
     receiver = new FormControl("", Validators.required);
 
-	constructor(private invoiceService:InvoiceService, fb: FormBuilder) {
+	constructor(private invoiceService:InvoiceService, private dataService: DataService<Invoice>, fb: FormBuilder) {
 		    this.myForm = fb.group({		
 		          invoiceId:this.invoiceId,
 		          amount:this.amount,
 		          receiver:this.receiver
 		    });
+	}
+
+	ngOnChanges(): void {
+		this.dataService.getInvoicesSentByUser(this.currentUserId).subscribe(result => {
+			this.sentInvoices = result;
+		})
+
+		this.dataService.getInvoicesReceivingByUser(this.currentUserId).subscribe(result => {
+			this.receivingInvoices = result;
+		})
 	}
 
 	createInvoiceClicked() {

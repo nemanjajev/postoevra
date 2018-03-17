@@ -1,3 +1,43 @@
+<div class="overview-invoices">
+    <div class="sent-invoices">
+        Sent
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Invoice id</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of sentInvoices">
+                <td>{{invoice.invoiceId}}</td>
+                <td>{{invoice.amount}}</td>
+                <td>{{invoice.status}}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="receiving-invoices">
+        Receiving
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Invoice id</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of receivingInvoices">
+                <td>{{invoice.invoiceId}}</td>
+                <td>{{invoice.amount}}</td>
+                <td>{{invoice.status}}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
 <form [formGroup]="myForm">           
     <div class="form-group text-left">
         <label for="invoiceId">invoiceId</label>
