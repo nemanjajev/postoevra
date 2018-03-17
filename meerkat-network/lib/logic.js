@@ -129,7 +129,7 @@ function onPayInvoice(payInvoiceTransaction) {
 
 /**
  * Pay invoice transaction
- * @param {org.meerkat.net.RejecetInvoice} rejectInvoiceTransaction
+ * @param {org.meerkat.net.RejectInvoice} rejectInvoiceTransaction
  * @transaction
  */
 function onRejectInvoice(rejectInvoiceTransaction) {
@@ -137,6 +137,16 @@ function onRejectInvoice(rejectInvoiceTransaction) {
     if (rejectInvoiceTransaction.sender.bizEntityId !== rejectInvoiceTransaction.invoice.receiver.bizEntityId) {
         throw new Error("Only receiver of transaction can reject transaction");
     }
+
+    var event;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'InvoiceUpdatedEvent');
+    event.oldState = "NEW";
+    event.newState = "REJECTED";
+    event.receiverId = rejectInvoiceTransaction.invoice.sender.bizEntityId;
+    event.senderId = rejectInvoiceTransaction.invoice.receiver.bizEntityId;
+    event.invoiceId = rejectInvoiceTransaction.invoice.invoiceId;
+
     return getAssetRegistry('org.meerkat.net.Invoice')
         .then(function (ar) {
             assetRegistry = ar;
@@ -145,6 +155,10 @@ function onRejectInvoice(rejectInvoiceTransaction) {
         .then(function (asset) {
             asset.status = "REJECTED";
             return assetRegistry.update(asset);
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
         })
         .catch(function (err) {
             throw new Error(err);
