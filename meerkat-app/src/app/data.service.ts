@@ -4,18 +4,28 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Configuration } from './configuration';
+import { BizEntity } from './org.meerkat.net';
 
 @Injectable()
 export class DataService<Type> {
     private resolveSuffix: string = '?resolve=true';
     private actionUrl: string;
     private headers: Headers;
+    private currentUser: BizEntity;
 
     constructor(private http: Http, private _configuration: Configuration) {
         this.actionUrl = _configuration.ServerWithApiUrl;
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+    }
+
+    public setCurrentUser(user: BizEntity) {
+        this.currentUser = user;
+    }
+
+    public getCurrentUser(): BizEntity {
+        return this.currentUser;
     }
 
     public getAll(ns: string): Observable<Type[]> {

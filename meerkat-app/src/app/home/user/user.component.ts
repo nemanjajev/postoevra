@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BizEntity } from '../../org.meerkat.net';
 import { UserService } from '../../services/user.service';
+import { DataService } from '../../data.service';
 
 @Component({
 	selector: 'app-user',
@@ -11,13 +12,16 @@ export class UserComponent implements OnInit {
 
 	private biznisEntities: BizEntity[];
 
-	constructor(private userService: UserService){}
+	constructor(private userService: UserService, private dataService: DataService<BizEntity>){}
 	
 	ngOnInit(): void {
 		this.userService.getAll().subscribe(result => {
 			this.biznisEntities = result;
-			console.log(this.biznisEntities);
 		})
 	}
 
+	onChange(event: any) {
+		let selectedUser = this.biznisEntities.find(x=> x.bizEntityId === event.target.value);
+		this.dataService.setCurrentUser(selectedUser);
+	}
 }

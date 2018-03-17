@@ -1,7 +1,7 @@
 <div class="users-container">
 	<div>
 		<label for="biz-entity-id">User:</label>
-		<select id="biz-entity-id">
+		<select id="biz-entity-id" (change)="onChange($event)">
 			<option *ngFor="let bizEntity of biznisEntities" value="{{bizEntity.bizEntityId}}">{{bizEntity.name}}</option> 
 		</select>
 	</div>
