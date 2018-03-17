@@ -16,7 +16,6 @@ export class OverviewComponent implements OnChanges {
 	constructor(private dataService: DataService<Invoice>){}
 
 	ngOnChanges(): void {
-		console.log(this.currentUserId);
 		this.dataService.getInvoicesSentByUser(this.currentUserId).subscribe(result => {
 			this.sentInvoices = result;
 		})
