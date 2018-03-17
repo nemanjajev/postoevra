@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BizEntity } from '../../org.meerkat.net';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../data.service';
@@ -15,7 +15,8 @@ export interface Message {
 	templateUrl: './user.component.html',
 	styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnChanges {
+	@Input() consolidator: number;
 
 	private biznisEntities: BizEntity[];
 	private messages;
@@ -28,12 +29,28 @@ export class UserComponent implements OnInit {
 		})
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		this.refreshCurrentUser();
+	}
+
 	onChange(event: any) {
-		let selectedUser = this.biznisEntities.find(x=> x.bizEntityId === event.target.value);
-		this.dataService.setCurrentUser(selectedUser);
+		this.updateCurrentUser(event.target.value);
 	}
 
 	get currentUser() {
 		return this.dataService.getCurrentUser();
+	}
+
+	private refreshCurrentUser() {
+		this.userService.getAll().subscribe(result => {
+			this.biznisEntities = result;
+			console.log(this.currentUser.bizEntityId);
+			this.updateCurrentUser(this.currentUser.bizEntityId);
+		})
+	}
+
+	private updateCurrentUser(userId: string) {
+		let selectedUser = this.biznisEntities.find(x=> x.bizEntityId === userId);
+		this.dataService.setCurrentUser(selectedUser);
 	}
 }

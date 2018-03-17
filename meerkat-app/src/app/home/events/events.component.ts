@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { WebsocketService } from 'app/services/websocket.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { WebsocketService } from 'app/services/websocket.service';
 	styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
+	@Output() onTransactionEvent = new EventEmitter<void>()
 
 	private events: any[] = [];
 	private shouldHighlight: boolean = false;
@@ -19,6 +20,7 @@ export class EventsComponent implements OnInit {
 			.subscribe(result => {
 				this.events.push(result.data.toString());
 				this.shouldHighlight = true;
+				this.onTransactionEvent.emit();
 				setTimeout(() => this.shouldHighlight = false, 1000);
 			} );
 	}

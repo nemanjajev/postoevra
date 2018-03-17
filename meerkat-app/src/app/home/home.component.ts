@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+	private rodney: number = 0;
+
 	constructor(){}
 
+	public triggerRefresh() {
+		this.rodney++;
+	}
 }
