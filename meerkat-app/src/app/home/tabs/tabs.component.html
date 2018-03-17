@@ -1,7 +1,16 @@
 <div class="tabs-container">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Invoices</a></li>
-        <li><a href="#">Reports</a></li>
+        <li (click)="clickedTabItem('home')" [ngClass]="{ active: isHomeActive() }"><a href="#">Home</a></li>
+        <li (click)="clickedTabItem('invoices')" [ngClass]="{ active: isInvoicesActive() }"><a href="#">Invoices</a></li>
+        <li (click)="clickedTabItem('reports')" [ngClass]="{ active: isReportsActive() }"><a href="#">Reports</a></li>
     </ul>
+    <div class="home-tab" *ngIf="isHomeActive()">
+        HOME TAB WORKS
+    </div>
+    <div class="invoice-tab" *ngIf="isInvoicesActive()">
+        INVOICE TAB WORKS
+    </div>
+    <div class="reports-tab" *ngIf="isReportsActive()">
+        REPORTS TAB WORKS
+    </div>
 </div>
