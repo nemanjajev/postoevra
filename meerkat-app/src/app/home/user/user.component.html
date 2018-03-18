@@ -1,7 +1,7 @@
 <div class="users-container">
 	<div>
 		<label for="biz-entity-id">Current User:</label>
-		<select id="biz-entity-id" (change)="onChange($event)">
+		<select id="biz-entity-id" [ngModel]="currentUserId" (change)="onChange($event)">
 			<option value="" disabled>Select Meerkat User</option>
 			<option *ngFor="let bizEntity of biznisEntities" value="{{bizEntity.bizEntityId}}">{{bizEntity.name}}</option> 
 		</select>

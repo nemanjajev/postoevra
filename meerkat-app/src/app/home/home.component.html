@@ -1,5 +1,5 @@
 <div class="home-container">
 	<app-user [consolidator]="rodney"></app-user>
-	<app-tabs></app-tabs>
+	<app-tabs [consolidator]="rodney"></app-tabs>
 	<app-events (onTransactionEvent)="triggerRefresh()"></app-events>	
 </div>

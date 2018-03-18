@@ -13,6 +13,7 @@ import { DialogService } from 'ng2-bootstrap-modal';
 })
 export class OverviewComponent implements OnChanges {
 	@Input() currentUserId: string;
+	@Input() consolidator: number;
 
 	private pendingActionsInvoices: Invoice[];
 

@@ -5,7 +5,7 @@
         <li (click)="clickedTabItem('reports')" [ngClass]="{ active: isReportsActive() }"><a href="#">Reports</a></li>
     </ul>
     <div class="home-tab" *ngIf="isHomeActive()">
-        <app-overview [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-overview>
+        <app-overview [currentUserId]="dataService.getCurrentUser().bizEntityId" [consolidator]="consolidator"></app-overview>
     </div>
     <div class="invoice-tab" *ngIf="isInvoicesActive()">
         <app-invoice [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-invoice>

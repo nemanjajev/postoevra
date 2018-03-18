@@ -20,6 +20,7 @@ export class UserComponent implements OnInit, OnChanges {
 
 	private biznisEntities: BizEntity[];
 	private messages;
+	private currentUserId: string;
 
 	constructor(private userService: UserService, private dataService: DataService<BizEntity>){}
 	
@@ -44,13 +45,13 @@ export class UserComponent implements OnInit, OnChanges {
 	private refreshCurrentUser() {
 		this.userService.getAll().subscribe(result => {
 			this.biznisEntities = result;
-			console.log(this.currentUser.bizEntityId);
 			this.updateCurrentUser(this.currentUser.bizEntityId);
 		})
 	}
 
 	private updateCurrentUser(userId: string) {
 		let selectedUser = this.biznisEntities.find(x=> x.bizEntityId === userId);
+		this.currentUserId = userId;
 		this.dataService.setCurrentUser(selectedUser);
 	}
 }
