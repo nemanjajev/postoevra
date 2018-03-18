@@ -261,7 +261,7 @@ function onBizEntityInvoices(bizEntityInvoicesTransaction) {
 }
 
 /**
- * Create invoice transaction
+ * Request grant transaction
  * @param {org.meerkat.net.CreateAccessRequest} createAccessRequestTransaction
  * @transaction
  */
@@ -283,6 +283,38 @@ function onCreateAccessRequest(createAccessRequestTransaction) {
             return assetRegistry.update(asset);
         })
         .then(function(){
+            var factory = getFactory();
+            emit(event);
+        })
+        .catch(function (err) {
+            throw new Error(err);
+        });
+}
+
+/**
+ * Accept grant request transaction
+ * @param {org.meerkat.net.RespondAccessRequest} respondAccessRequestTransaction
+ * @transaction
+ */
+function onRespondAccessRequest(respondAccessRequestTransaction) {
+    var event;
+    var assetRegistry;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'AccessRequestEvent');
+    event.receiverId = "bla?";
+    
+    return getAssetRegistry('org.meerkat.net.AccessGrant')
+        .then(function (ar) {
+            assetRegistry = ar;
+            return assetRegistry.get(respondAccessRequestTransaction.sender.bizEntityId);
+        })
+        .then(function (asset) {
+            event.senderId = respondAccessRequestTransaction.sender.bizEntityId;
+            event.receiverId = "3";
+            asset.granted = asset.requested;
+            return assetRegistry.update(asset);
+        })
+        .then(function () {
             var factory = getFactory();
             emit(event);
         })
