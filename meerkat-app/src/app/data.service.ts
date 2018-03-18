@@ -89,6 +89,12 @@ export class DataService<Type> {
           .catch(this.handleError);
     }
 
+    public getAccessGrant(ns: string, id: string): Observable<Type> {
+        return this.http.get(this.actionUrl+ '/AccessGrant' + id + this.resolveSuffix)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
     public requestDataAccess(request: any): Observable<Type> {
 
         return this.http.post(`${this.actionUrl}/CreateAccessRequest`, request)

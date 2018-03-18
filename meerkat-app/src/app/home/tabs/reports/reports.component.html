@@ -6,4 +6,21 @@
         </div>
         <button (click)="requestClicked()" type="submit" class="btn btn-success">Request Data Access</button>
     </form>
+    <div class="pending-requests">
+            Pending data access requests
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Sender id</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pendingRequest of pendingRequests">
+                    <td>{{pendingRequest.requested}}</td>
+                    <td><button (click)="onAcceptClicked(pendingRequest)" class="btn btn-primary">ACCEPT</button></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
 </div>
