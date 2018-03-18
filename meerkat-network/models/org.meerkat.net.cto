@@ -8,6 +8,33 @@ asset Invoice identified by invoiceId {
   --> BizEntity receiver
 }
 
+asset AccessGrant identified by accessGrantId {
+  o String accessGrantId
+  --> BizEntity requested
+  --> BizEntity granted
+}
+
+transaction CreateAccessRequest {
+  --> BizEntity sender
+  --> BizEntity receiver
+}
+
+transaction RespondAccessRequest {
+  o AccessRequestAction action
+  --> AccessGrant request
+  --> BizEntity sender
+}
+
+event AccessRequestEvent {
+  o String senderId
+  o String receiverId
+}
+
+enum AccessRequestAction {
+  o ACCEPT
+  o REJECT
+}
+
 event InvoiceUpdatedEvent {
   o String invoiceId
   o String senderId
