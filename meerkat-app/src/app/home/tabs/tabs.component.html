@@ -2,7 +2,7 @@
     <ul class="nav nav-tabs">
         <li (click)="clickedTabItem('home')" [ngClass]="{ active: isHomeActive() }"><a href="#">Home</a></li>
         <li (click)="clickedTabItem('invoices')" [ngClass]="{ active: isInvoicesActive() }"><a href="#">Invoices</a></li>
-        <li (click)="clickedTabItem('reports')" [ngClass]="{ active: isReportsActive() }"><a href="#">Reports</a></li>
+        <li (click)="clickedTabItem('reports')" [ngClass]="{ active: isReportsActive() }"><a href="#">Partners</a></li>
     </ul>
     <div class="home-tab" *ngIf="isHomeActive()">
         <app-overview [currentUserId]="dataService.getCurrentUser().bizEntityId" [consolidator]="consolidator"></app-overview>
@@ -11,6 +11,6 @@
         <app-invoice [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-invoice>
     </div>
     <div class="reports-tab" *ngIf="isReportsActive()">
-        REPORTS TAB WORKS
+        <app-reports [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-reports>
     </div>
 </div>
