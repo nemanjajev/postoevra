@@ -63,7 +63,7 @@ export class OverviewComponent implements OnChanges {
 					.subscribe((isConfirmed)=>{
 						if(isConfirmed) {
 							this.dataService.acceptInvoice(this.currentUserId, invoice.invoiceId)
-								.subscribe(result => alert('Invoice successfully accepted!'));
+								.subscribe(result => console.log('Invoice successfully accepted!'));
 						}
 					});
 				break;
@@ -74,7 +74,7 @@ export class OverviewComponent implements OnChanges {
 					.subscribe((isConfirmed)=>{
 						if(isConfirmed) {
 							this.dataService.payInvoice(this.currentUserId, invoice.invoiceId)
-								.subscribe(result => alert('Invoice successfully marked as paid!'));
+								.subscribe(result => console.log('Invoice successfully marked as paid!'));
 						}
 					});	
 				break;
@@ -85,7 +85,7 @@ export class OverviewComponent implements OnChanges {
 					.subscribe((isConfirmed)=>{
 						if(isConfirmed) {
 							this.dataService.confirmPaidInvoice(this.currentUserId, invoice.invoiceId)
-								.subscribe(result => alert('Payment of the invoice successfully confirmed!'));
+								.subscribe(result => console.log('Payment of the invoice successfully confirmed!'));
 						}
 					});
 				break;
