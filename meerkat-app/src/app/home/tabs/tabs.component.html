@@ -11,6 +11,6 @@
         <app-invoice [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-invoice>
     </div>
     <div class="reports-tab" *ngIf="isReportsActive()">
-        <app-reports [currentUserId]="dataService.getCurrentUser().bizEntityId"></app-reports>
+        <app-reports [currentUserId]="dataService.getCurrentUser().bizEntityId" [consolidator]="consolidator"></app-reports>
     </div>
 </div>

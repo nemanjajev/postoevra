@@ -96,8 +96,13 @@ export class DataService<Type> {
     }
 
     public requestDataAccess(request: any): Observable<Type> {
-
         return this.http.post(`${this.actionUrl}/CreateAccessRequest`, request)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
+    public acceptDataAccess(request: any): Observable<Type> {
+        return this.http.post(`${this.actionUrl}/RespondAccessRequest`, request)
           .map(this.extractData)
           .catch(this.handleError);
     }

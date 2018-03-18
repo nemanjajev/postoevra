@@ -18,13 +18,13 @@
         <tbody>
             <tr *ngFor="let pendingRequest of pendingRequests">
                 <td>{{pendingRequest.requested}}</td>
-                <td><button (click)="onAcceptClicked(pendingRequest)" class="btn btn-primary">ACCEPT</button></td>
+                <td><button (click)="acceptClicked()" class="btn btn-primary">ACCEPT</button></td>
             </tr>
         </tbody>
         </table>
     </div>
     <div class="accepted-requests">
-        Your data can be seen by
+        Your data can be seen by:
         <table class="table">
         <thead>
             <tr>

@@ -14,6 +14,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 export class ReportsComponent implements OnChanges {
 	@Input() currentUserId: string;
+	@Input() consolidator: number;
 
 	myForm: FormGroup;
 	receiver = new FormControl("", Validators.required);
@@ -30,6 +31,7 @@ export class ReportsComponent implements OnChanges {
 
 	ngOnChanges(): void {
 		this.pendingRequests = [];
+		this.approvedRequests = [];
 		this.dataService.getAccessGrant(this.currentUserId).subscribe(result => {
 			if(result.requested !== result.granted) {
 				this.pendingRequests.push(result);
@@ -53,5 +55,14 @@ export class ReportsComponent implements OnChanges {
 		});
 
 		this.dataService.requestDataAccess(request).subscribe(result => console.log(result));
+	}
+
+	acceptClicked() {
+		let request = {
+			"$class": "org.meerkat.net.RespondAccessRequest",
+			"sender": "resource:org.meerkat.net.BizEntity#" + this.currentUserId
+		};
+
+		this.dataService.acceptDataAccess(request).subscribe(result => console.log(result));
 	}
 }
