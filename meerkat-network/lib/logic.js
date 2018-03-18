@@ -251,11 +251,42 @@ function onConfirmPaidInvoice(confirmPaidInvoiceTransaction) {
  */
 function onBizEntityInvoices(bizEntityInvoicesTransaction) {
     return getAssetRegistry('org.meerkat.net.Invoice')
-    .then(function() {
-        return query('selectInvoicesForUserSender')
+    .then(function(ar) {
+        return query('selectInvoicesForUserSender',{ entityId: "org.meerkat.net.BizEntity#1" })
         .then(function(results){
             return results;
         });
     });
 
+}
+
+/**
+ * Create invoice transaction
+ * @param {org.meerkat.net.CreateAccessRequest} createAccessRequestTransaction
+ * @transaction
+ */
+function onCreateAccessRequest(createAccessRequestTransaction) {
+    var event;
+    var assetRegistry;
+    var factory = getFactory();
+    event = factory.newEvent('org.meerkat.net', 'AccessRequestEvent');
+    event.senderId = createAccessRequestTransaction.sender.bizEntityId;
+    event.receiverId = createAccessRequestTransaction.receiver.bizEntityId;
+
+    return getAssetRegistry('org.meerkat.net.AccessGrant')
+        .then(function (ar) {
+            assetRegistry = ar;
+            return assetRegistry.get(createAccessRequestTransaction.receiver.bizEntityId);
+        })
+        .then(function (asset) {
+            asset.requested = createAccessRequestTransaction.sender;
+            return assetRegistry.update(asset);
+        })
+        .then(function(){
+            var factory = getFactory();
+            emit(event);
+        })
+        .catch(function (err) {
+            throw new Error(err);
+        });
 }
