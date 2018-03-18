@@ -18,7 +18,9 @@ export class ReportsComponent implements OnChanges {
 	myForm: FormGroup;
 	receiver = new FormControl("", Validators.required);
 
-	private pendingRequests: any[];
+	private pendingRequests: any[] = [];
+
+	private approvedRequests: any[] = [];
 	
 	constructor(private dialogService: DialogService,  private dataService: DataService<Invoice>, fb: FormBuilder){
 		this.myForm = fb.group({		
@@ -27,7 +29,16 @@ export class ReportsComponent implements OnChanges {
 	}
 
 	ngOnChanges(): void {
-		// this.pendingRequests = this.dataService.getSingle
+		this.pendingRequests = [];
+		this.dataService.getAccessGrant(this.currentUserId).subscribe(result => {
+			if(result.requested !== result.granted) {
+				this.pendingRequests.push(result);
+			} else {
+				if(!result.granted.endsWith(this.currentUserId)) {
+					this.approvedRequests.push(result);
+				}
+			}
+		});
 	}
 
 	requestClicked() {

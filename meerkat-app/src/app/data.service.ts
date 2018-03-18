@@ -89,8 +89,8 @@ export class DataService<Type> {
           .catch(this.handleError);
     }
 
-    public getAccessGrant(ns: string, id: string): Observable<Type> {
-        return this.http.get(this.actionUrl+ '/AccessGrant' + id + this.resolveSuffix)
+    public getAccessGrant(bizEntityId: string): Observable<any> {
+        return this.http.get(this.actionUrl+ 'AccessGrant/' + bizEntityId)
           .map(this.extractData)
           .catch(this.handleError);
     }

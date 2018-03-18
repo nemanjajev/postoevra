@@ -7,20 +7,37 @@
         <button (click)="requestClicked()" type="submit" class="btn btn-success">Request Data Access</button>
     </form>
     <div class="pending-requests">
-            Pending data access requests
-            <table class="table">
-            <thead>
-                <tr>
-                    <th>Sender id</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let pendingRequest of pendingRequests">
-                    <td>{{pendingRequest.requested}}</td>
-                    <td><button (click)="onAcceptClicked(pendingRequest)" class="btn btn-primary">ACCEPT</button></td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
+        Pending data access requests
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Sender id</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pendingRequest of pendingRequests">
+                <td>{{pendingRequest.requested}}</td>
+                <td><button (click)="onAcceptClicked(pendingRequest)" class="btn btn-primary">ACCEPT</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="accepted-requests">
+        Your data can be seen by
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Business entity id</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let approvedRequest of approvedRequests">
+                <td>{{approvedRequest.requested}}</td>
+                <td><button class="btn btn-primary">REVOKE</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
 </div>
