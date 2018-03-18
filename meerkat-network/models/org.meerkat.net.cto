@@ -20,8 +20,6 @@ transaction CreateAccessRequest {
 }
 
 transaction RespondAccessRequest {
-  o AccessRequestAction action
-  --> AccessGrant request
   --> BizEntity sender
 }
 
