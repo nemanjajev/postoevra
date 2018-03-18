@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BizEntity } from '../../org.meerkat.net';
 
@@ -8,6 +8,7 @@ import { BizEntity } from '../../org.meerkat.net';
 	styleUrls: ['./tabs.component.css']
 })
 export class TabsComponent {
+	@Input() consolidator: number;
 	private readonly HOME = 'home';
 	private readonly INVOICES = 'invoices';
 	private readonly REPORTS = 'reports';

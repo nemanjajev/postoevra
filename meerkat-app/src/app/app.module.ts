@@ -17,6 +17,7 @@ import { InvoiceComponent } from './home/tabs/invoice/invoice.component';
 import { AcceptModalComponent } from "./shared/modal/acceptModal.component";
 import { InvoiceService } from './services/invoice.service';
 import { WebsocketService } from './services/websocket.service';
+import { ReportsComponent } from './home/tabs/reports/reports.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { WebsocketService } from './services/websocket.service';
     UserComponent,
     OverviewComponent,
     InvoiceComponent,
+    ReportsComponent,
     AcceptModalComponent
   ],
   entryComponents: [

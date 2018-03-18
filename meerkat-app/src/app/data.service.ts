@@ -89,6 +89,13 @@ export class DataService<Type> {
           .catch(this.handleError);
     }
 
+    public requestDataAccess(request: any): Observable<Type> {
+
+        return this.http.post(`${this.actionUrl}/CreateAccessRequest`, request)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
     public getAll(ns: string): Observable<Type[]> {
         console.log('GetAll ' + ns + ' to ' + this.actionUrl + ns);
         return this.http.get(`${this.actionUrl}${ns}`)

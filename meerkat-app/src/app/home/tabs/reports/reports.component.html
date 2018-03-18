@@ -1,0 +1,9 @@
+<div class="reports">
+    <form [formGroup]="myForm">           
+        <div class="form-group text-left">
+            <label for="receiver">receiver</label>
+            <input formControlName="receiver" type="number" step='any' class="form-control">
+        </div>
+        <button (click)="requestClicked()" type="submit" class="btn btn-success">Request Data Access</button>
+    </form>
+</div>
