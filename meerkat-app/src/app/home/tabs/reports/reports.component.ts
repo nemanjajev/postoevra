@@ -17,6 +17,8 @@ export class ReportsComponent implements OnChanges {
 
 	myForm: FormGroup;
 	receiver = new FormControl("", Validators.required);
+
+	private pendingRequests: any[];
 	
 	constructor(private dialogService: DialogService,  private dataService: DataService<Invoice>, fb: FormBuilder){
 		this.myForm = fb.group({		
@@ -25,7 +27,7 @@ export class ReportsComponent implements OnChanges {
 	}
 
 	ngOnChanges(): void {
-		
+		// this.pendingRequests = this.dataService.getSingle
 	}
 
 	requestClicked() {
